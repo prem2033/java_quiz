@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">java quiz</string>
+    <string name="quizname">Welcome to QuizHat</string>
+    <string name="score">Highscore=0 </string>
+    <string name="startquiz">Start</string>
+    <string name="scoremsg">Score=0</string>
+    <string name="correct">correct:0/x</string>
+    <string name="time">00:00</string>
+    <string name="question">question will appear here</string>
+    <string name="option">options</string>
+    <string name="submit">SUBMIT</string>
+    <string name="setting">Setting</string>
+    <string name="rest_highScore">Reset HighScore</string>
+    <string name="header">Header Name</string>
+    <string name="header_description">Insert your mail Id</string>
+    <string name="title_activity_nav_drawer_activity">Nav_drawer_activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+</resources>
