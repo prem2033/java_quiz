@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">java quiz</string>
+    <string name="app_name">QuizHat</string>
     <string name="quizname">Welcome to QuizHat</string>
     <string name="score">Highscore=0 </string>
     <string name="startquiz">Start</string>

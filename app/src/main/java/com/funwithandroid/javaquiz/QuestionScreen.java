@@ -15,15 +15,17 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelper;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelpersecond;
 import com.funwithandroid.javaquiz.dialog.ViewDialog;
 
 import java.util.Collections;
 import java.util.List;
 
 public class QuestionScreen extends AppCompatActivity {
-    public static String EXTRA_SCORE;
+    public static String EXTRA_SCORE,EXTRA_QUIZ_POSITION;
     private List<Question> questionList;
     private QuizDbHelper quizDbHelper;
+    private QuizDbHelpersecond quizDbHelpersecond;
     private RadioGroup optiongroup;
     private RadioButton option1,option2,option3;
     private TextView scoretext,correcttext,questiontext,timetext;
@@ -31,9 +33,10 @@ public class QuestionScreen extends AppCompatActivity {
     private  int totalquestion,currentquestion=0;
     private boolean answred;
     private Question question;
-    private int i=0,score=0;
+    private int score=0;
     private ColorStateList radiontextcolor;
     private  long backPressedTime;
+    private int quiz_position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +46,23 @@ public class QuestionScreen extends AppCompatActivity {
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         initilization();
-        quizDbHelper=new QuizDbHelper(this);
-        questionList=quizDbHelper.getAllQuestions();
-        totalquestion=questionList.size();
-        Collections.shuffle(questionList);
-        correcttext.setText("Question:"+totalquestion);
+        getIntentData();
+        switch (quiz_position){
+            case 1:
+                quizDbHelper=new QuizDbHelper(this);
+                questionList=quizDbHelper.getAllQuestions();
+                totalquestion=questionList.size();
+                Collections.shuffle(questionList);
+                correcttext.setText("Question:"+totalquestion);
+                break;
+            case 2:
+                quizDbHelpersecond=new QuizDbHelpersecond(this);
+                questionList=quizDbHelpersecond.getAllQuestions();
+                totalquestion=questionList.size();
+                Collections.shuffle(questionList);
+                correcttext.setText("Question:"+totalquestion);
+                break;
+        }
         setNextQuestionOnScreen();
         nextbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +175,7 @@ public class QuestionScreen extends AppCompatActivity {
     public  void finishTheQuiz(){
         Intent resultIntent = new Intent();
         resultIntent.putExtra(EXTRA_SCORE, score);
+        //resultIntent.putExtra(EXTRA_QUIZ_POSITION,quiz_position);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
@@ -205,6 +221,11 @@ public class QuestionScreen extends AppCompatActivity {
 //        }.start();
         ViewDialog alert = new ViewDialog();
         alert.showDialogwrong(this);
+    }
+    private void getIntentData(){
+        Intent intent=getIntent();
+        quiz_position=intent.getIntExtra("DATA_BASE_POSITION",0);
+
     }
 
 

@@ -4,35 +4,45 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import  com.funwithandroid.javaquiz.permission.GetPermission;
+import  com.funwithandroid.javaquiz.contactdeveloper.Contact;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.funwithandroid.javaquiz.adapter.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 
 public class recyler_view_quiz_main_page extends AppCompatActivity {
-    RecyclerView recylerView;
-    RecyclerViewAdapter recylerViewAdapter;
-    ArrayList<String>  quizquestionlist;
+   private RecyclerView recylerView;
+    private RecyclerViewAdapter recylerViewAdapter;
+    private ArrayList<String>  quizquestionlist;
+    public String DATA_BASE_NAME=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyler_view_quiz_main_page);
         recylerView=findViewById(R.id.recylerview);
         quizquestionlist=new ArrayList<>();
-        ActionBar actionBar=getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setTitle("QuizHat");
-        actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+        //ActionBar actionBar=getSupportActionBar();
+        //assert actionBar != null;
+       // actionBar.setTitle("QuizHat");
+        //actionBar.setDisplayUseLogoEnabled(true);
+        //actionBar.setDisplayShowHomeEnabled(true);
         AddCardView();
         getRecylerView();
         recylerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                startActivity(new Intent(getApplicationContext(),MainScreen.class));
+                Intent intent=new Intent(getApplicationContext(),MainScreen.class);
+                intent.putExtra("DATA_BASE_NAME",position+1);
+               // Toast.makeText(recyler_view_quiz_main_page.this, ""+position, Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             }
         });
     }
@@ -47,6 +57,8 @@ public class recyler_view_quiz_main_page extends AppCompatActivity {
         quizquestionlist.add("Quiz 8");
         quizquestionlist.add("Quiz 9");
         quizquestionlist.add("Quiz 10");
+        quizquestionlist.add("Quiz 11");
+        quizquestionlist.add("Quiz 12");
     }
     private void getRecylerView() {
         recylerView.setHasFixedSize(true);
@@ -54,4 +66,42 @@ public class recyler_view_quiz_main_page extends AppCompatActivity {
         recylerViewAdapter=new RecyclerViewAdapter(recyler_view_quiz_main_page.this,quizquestionlist);
         recylerView.setAdapter(recylerViewAdapter);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar_recyle_page, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.contactdeveloper:
+                callDeveloper();
+                break;
+            case R.id.messagedeveoper:
+                messageDeveloper();
+                break;
+            case R.id.maildeveloper:
+                Contact.mailDeveloper(this);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public  void callDeveloper(){
+        if(GetPermission.CheckPermissions(this)){
+            Contact.callDeveloper(this);
+        }else{
+            GetPermission.RequestPermissions(this);
+        }
+    }
+    public  void messageDeveloper(){
+        if(GetPermission.CheckPermissionsSMS(this)) {
+            Contact.messageDeveloper(this);
+        }else{
+            GetPermission.RequestPermissionsSMS(this);
+
+        }
+    }
+
+
 }

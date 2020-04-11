@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Call Deceloper"
+        android:id="@+id/contactdeveloper"/>
+    <item
+        android:id="@+id/messagedeveoper"
+        android:title="Message Developer"/>
+    <item
+        android:title="Mail to developer"
+        android:id="@+id/maildeveloper"/>
+</menu>
