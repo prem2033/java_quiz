@@ -14,7 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelper;
 
 public class MainScreen extends AppCompatActivity {
      private Button quizutton;
@@ -28,6 +31,10 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         quizutton=findViewById(R.id.quizpage);
         highscoretext=findViewById(R.id.highscoretext);
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setTitle("QuizHat");
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
         loadHighScore();//from sharedPreferences
         SharedPreferences getShared = getSharedPreferences("quiz", MODE_PRIVATE);
         VERSION = getShared.getString("version","VERSION 1.0.0");

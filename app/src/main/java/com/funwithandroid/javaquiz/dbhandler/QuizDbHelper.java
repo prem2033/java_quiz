@@ -1,4 +1,4 @@
-package com.funwithandroid.javaquiz;
+package com.funwithandroid.javaquiz.dbhandler;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.funwithandroid.javaquiz.DbVariables.QuestionTable;
+import com.funwithandroid.javaquiz.dbParams.DbVariables.QuestionTable;
+import com.funwithandroid.javaquiz.Question;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,29 +52,29 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         Log.d("ccccc","upgradeend");
     }
     public  void fillQuestionsToDb(){
-        Log.d("ccccc","fillttdb");
+        Question question;
         db=this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
         onCreate(db);
-        Question q1=new Question("What is 2+2?","4","6","8",1);
-        addToDataBase(q1);
-        Question q2=new Question("what is 2+4?","4","6","8",2);
-        addToDataBase(q2);
-        Question q3=new Question("what is 2+6?","4","6","8",3);
-        addToDataBase(q3);
-        Question q4=new Question("what is 7+10","19","40","none of these",3);
-        addToDataBase(q4);
-        Question q5=new Question("what is 10+11","22","23","21",3);
-        addToDataBase(q5);
-        Question q6=new Question("Evaluate (2+2/2)","4","2","3",3);
-        addToDataBase(q6);
-        Question q7=new Question("Evaluate (2/2/2)","0.5","2.8","3.6",1);
-        addToDataBase(q7);
-        Question q8=new Question("1,5,21,85,?","325","341","423",2);
-        addToDataBase(q8);
+        question=new Question("What is 2+2?","4","6","8",1);
+        addToDataBase(question);
+        question=new Question("what is 2+4?","4","6","8",2);
+        addToDataBase(question);
+        question=new Question("what is 2+6?","4","6","8",3);
+        addToDataBase(question);
+        question=new Question("what is 7+10","19","40","none of these",3);
+        addToDataBase(question);
+        question=new Question("what is 10+11","22","23","21",3);
+        addToDataBase(question);
+        question=new Question("Evaluate (2+2/2)","4","2","3",3);
+        addToDataBase(question);
+        question=new Question("Evaluate (2/2/2)","0.5","2.8","3.6",1);
+        addToDataBase(question);
+        question=new Question("1,5,21,85,?","325","341","423",2);
+        addToDataBase(question);
 
     }
-    public   void addToDataBase(Question question){
+   private void addToDataBase(Question question){
        db=getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         contentValues.put(QuestionTable.COLUMN_QUESTION,question.getQuestion());
@@ -86,7 +87,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
     }
     public List<Question> getAllQuestions(){
         db=getReadableDatabase();
-        List<Question> questionslist=new ArrayList<Question>();
+        List<Question> questionslist=new ArrayList<>();
         Cursor cursor=db.rawQuery("SELECT * FROM "+QuestionTable.TABLE_NAME,null);
         if(cursor.moveToFirst()){
             do{
@@ -100,6 +101,7 @@ public class QuizDbHelper extends SQLiteOpenHelper {
             }while (cursor.moveToNext());
         }
         db.close();
+        cursor.close();
         return  questionslist;
     }
 }

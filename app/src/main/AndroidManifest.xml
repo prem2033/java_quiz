@@ -10,9 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".QuestionScreen"
-            android:parentActivityName=".MainScreen" />
-        <activity android:name=".MainScreen">
+            android:name=".MainScreen"></activity>
+        <activity
+            android:name=".QuestionScreen" />
+        <activity android:name=".recyler_view_quiz_main_page">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

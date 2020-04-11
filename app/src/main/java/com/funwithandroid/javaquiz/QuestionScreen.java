@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -13,8 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelper;
+import com.funwithandroid.javaquiz.dialog.ViewDialog;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 public class QuestionScreen extends AppCompatActivity {
     public static String EXTRA_SCORE;
     private List<Question> questionList;
-    private  QuizDbHelper quizDbHelper;
+    private QuizDbHelper quizDbHelper;
     private RadioGroup optiongroup;
     private RadioButton option1,option2,option3;
     private TextView scoretext,correcttext,questiontext,timetext;
@@ -38,7 +39,7 @@ public class QuestionScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_screen);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Question1");
+        actionBar.setTitle("Question");
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         initilization();
@@ -174,32 +175,36 @@ public class QuestionScreen extends AppCompatActivity {
         backPressedTime = System.currentTimeMillis();
     }
     public  void correctDialogOnCorreect(){
-         final AlertDialog.Builder dialog=new AlertDialog.Builder(this);
-        dialog.setMessage("Correct");
-        final AlertDialog alert = dialog.create();
-        alert.show();
-        new CountDownTimer(1000, 500) {
-            @Override
-            public void onTick(long millisUntilFinished) {         }
-            @Override
-            public void onFinish() {
-                alert.dismiss();
-            }
-        }.start();
+//         final AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+//        dialog.setMessage("Correct");
+//        final AlertDialog alert = dialog.create();
+//        alert.show();
+//        new CountDownTimer(1000, 500) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {         }
+//            @Override
+//            public void onFinish() {
+//                alert.dismiss();
+//            }
+//        }.start();
+        ViewDialog alert = new ViewDialog();
+        alert.showDialogcorrect(this);
     }
     public  void correctDialogOnWrong(){
-        final AlertDialog.Builder dialog=new AlertDialog.Builder(this);
-        dialog.setMessage("Wrong");
-        final AlertDialog alert = dialog.create();
-        alert.show();
-        new CountDownTimer(1000, 500) {
-            @Override
-            public void onTick(long millisUntilFinished) {         }
-            @Override
-            public void onFinish() {
-                alert.dismiss();
-            }
-        }.start();
+//        final AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+//        dialog.setMessage("Wrong");
+//        final AlertDialog alert = dialog.create();
+//        alert.show();
+//        new CountDownTimer(1000, 500) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {         }
+//            @Override
+//            public void onFinish() {
+//                alert.dismiss();
+//            }
+//        }.start();
+        ViewDialog alert = new ViewDialog();
+        alert.showDialogwrong(this);
     }
 
 

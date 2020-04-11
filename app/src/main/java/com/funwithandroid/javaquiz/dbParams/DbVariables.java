@@ -1,4 +1,4 @@
-package com.funwithandroid.javaquiz;
+package com.funwithandroid.javaquiz.dbParams;
 
 import android.provider.BaseColumns;
 

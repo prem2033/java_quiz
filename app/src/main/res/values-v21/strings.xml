@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">java quiz</string>
     <string name="quizname">Welcome to QuizHat</string>
@@ -24,5 +25,4 @@
     <string name="lets_start">LET\'S START</string>
     <string name="imagecorrect">for correct mark</string>
     <string name="correctmsg">Correct</string>
-    <string name="wrong">Wrong</string>
 </resources>
