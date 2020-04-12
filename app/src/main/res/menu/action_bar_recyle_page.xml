@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="Call Deceloper"
-        android:id="@+id/contactdeveloper"/>
+        android:title="@string/calldeveloper"
+        android:id="@+id/contactdeveloper"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/messagedeveoper"
-        android:title="Message Developer"/>
+        android:title="@string/message_developer"/>
     <item
-        android:title="Mail to developer"
+        android:title="@string/maildeveloper"
         android:id="@+id/maildeveloper"/>
 </menu>

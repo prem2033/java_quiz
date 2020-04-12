@@ -56,21 +56,22 @@ public class QuizDbHelper extends SQLiteOpenHelper {
         db=this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
         onCreate(db);
-        question=new Question("What is 2+2?","4","6","8",1);
+        question=new Question(
+                "It was Sunday on Jan 1, 2006. What was the day of the week Jan 1, 2010?","Sunday","Saturday","Friday",3);
         addToDataBase(question);
-        question=new Question("what is 2+4?","4","6","8",2);
+        question=new Question("What was the day of the week on 28th May, 2006?","Sunday","Saturday","Friday",1);
         addToDataBase(question);
-        question=new Question("what is 2+6?","4","6","8",3);
+        question=new Question("What was the day of the week on 17th June, 1998?","Monday","Tuesday","Wednesday",3);
         addToDataBase(question);
-        question=new Question("what is 7+10","19","40","none of these",3);
+        question=new Question("Today is Monday. After 61 days, it will be:","Wednesday","Saturday","Tuesday",2);
         addToDataBase(question);
-        question=new Question("what is 10+11","22","23","21",3);
+        question=new Question("How many days are there in x weeks x days?","7x2","8x","7",2);
         addToDataBase(question);
-        question=new Question("Evaluate (2+2/2)","4","2","3",3);
+        question=new Question("The last day of a century cannot be","Tuesday","Wednesday","Monday",1);
         addToDataBase(question);
-        question=new Question("Evaluate (2/2/2)","0.5","2.8","3.6",1);
+        question=new Question("The calendar for the year 2007 will be the same for the year:","2014","2018","2016",2);
         addToDataBase(question);
-        question=new Question("1,5,21,85,?","325","341","423",2);
+        question=new Question("Which of the following is not a leap year?","800","700","1200",2);
         addToDataBase(question);
 
     }

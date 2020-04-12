@@ -25,4 +25,7 @@
     <string name="imagecorrect">for correct mark</string>
     <string name="correctmsg">Correct</string>
     <string name="wrong">Wrong</string>
+    <string name="calldeveloper">Call to Developer</string>
+    <string name="message_developer">Message to Developer</string>
+    <string name="maildeveloper">Mail to developer</string>
 </resources>

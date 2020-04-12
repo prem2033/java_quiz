@@ -14,15 +14,16 @@ import com.funwithandroid.javaquiz.dbParams.DbVariables.QuestionTable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuizDbHelpersecond extends SQLiteOpenHelper {
+public class QuizDbHelperThird extends SQLiteOpenHelper {
     private SQLiteDatabase db;
-    public QuizDbHelpersecond(Context context) {
-        super(context, QuestionTable.DATABASE_NAME_SECOND, null, QuestionTable.VERSION);
+    public QuizDbHelperThird(Context context) {
+        super(context, QuestionTable.DATABASE_NAME_THIRD, null, QuestionTable.VERSION);
 
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
             this.db=db;
+        Log.d("ccccc","start");
         final  String CREATE_DATA_BASE="CREATE TABLE "+
                 QuestionTable.TABLE_NAME+"("+
                 QuestionTable._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
@@ -33,13 +34,13 @@ public class QuizDbHelpersecond extends SQLiteOpenHelper {
                 QuestionTable.COLUMN_ANSWER+" INTEGER"+
                 ")";
         db.execSQL(CREATE_DATA_BASE);
-       // Log.d("ccccc","end");
+        Log.d("ccccc","end");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       // Log.d("ccccc","upgradestatrt");
+        Log.d("ccccc","upgradestatrt");
 
         try {
             db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
@@ -55,22 +56,21 @@ public class QuizDbHelpersecond extends SQLiteOpenHelper {
         db=this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
         onCreate(db);
-        question=new Question(
-                "3, 5, 11, 14, 17, 21","3","14","21",2);
+        question=new Question("ENORMOUS","Soft","Average","Tiny",3);
         addToDataBase(question);
-        question=new Question("8, 27, 64, 100, 125, 216, 343","100","125","8",1);
+        question=new Question("COMMISSIONED","Terminated","Started","Closed",1);
         addToDataBase(question);
-        question=new Question("10, 25, 45, 54, 60, 75, 80","10","75","54",3);
+        question=new Question("SHRINK","Contract","Spoil","Expand",3);
         addToDataBase(question);
-        question=new Question("6, 9, 15, 21, 24, 28, 30","21","28","none of these",2);
+        question=new Question("ARTIFICIAL","Red","Natural","Solid",2);
         addToDataBase(question);
-        question=new Question("3,5,7,41,17,21","21","5","17",1);
+        question=new Question("EXPAND","Congest","Condense","Convert",2);
         addToDataBase(question);
-        question=new Question("2,80,46,54,67","80","54","67",3);
+        question=new Question("MORTAL","Immortal","Spiritual","Divine",1);
         addToDataBase(question);
-        question=new Question("1.2,5.9,6.9,2,7.9","2","1.2","None",1);
+        question=new Question("OBEYING","Following","Ordering","Contradicting",2);
         addToDataBase(question);
-        question=new Question("16, 25, 36, 72, 144, 196, 225","72","16","36",1);
+        question=new Question("FRESH","Sluggish","Stale","Faulty",2);
         addToDataBase(question);
 
     }

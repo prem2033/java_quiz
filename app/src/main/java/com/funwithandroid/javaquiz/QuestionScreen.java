@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -15,6 +16,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelper;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperSynonyms;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperThird;
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelpersecond;
 import com.funwithandroid.javaquiz.dialog.ViewDialog;
 
@@ -26,6 +29,8 @@ public class QuestionScreen extends AppCompatActivity {
     private List<Question> questionList;
     private QuizDbHelper quizDbHelper;
     private QuizDbHelpersecond quizDbHelpersecond;
+    private QuizDbHelperThird quizDbHelperThird;
+    private QuizDbHelperSynonyms quizDbHelperSynonyms;
     private RadioGroup optiongroup;
     private RadioButton option1,option2,option3;
     private TextView scoretext,correcttext,questiontext,timetext;
@@ -43,6 +48,7 @@ public class QuestionScreen extends AppCompatActivity {
         setContentView(R.layout.activity_question_screen);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle("Question");
+        actionBar.setTitle(Html.fromHtml("<font color='#03DAC5'>"+"Question"+"</font>"));
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         initilization();
@@ -58,6 +64,20 @@ public class QuestionScreen extends AppCompatActivity {
             case 2:
                 quizDbHelpersecond=new QuizDbHelpersecond(this);
                 questionList=quizDbHelpersecond.getAllQuestions();
+                totalquestion=questionList.size();
+                Collections.shuffle(questionList);
+                correcttext.setText("Question:"+totalquestion);
+                break;
+            case 3:
+                quizDbHelperThird=new QuizDbHelperThird(this);
+                questionList=quizDbHelperThird.getAllQuestions();
+                totalquestion=questionList.size();
+                Collections.shuffle(questionList);
+                correcttext.setText("Question:"+totalquestion);
+                break;
+            case 4:
+                quizDbHelperSynonyms=new QuizDbHelperSynonyms(this);
+                questionList=quizDbHelperSynonyms.getAllQuestions();
                 totalquestion=questionList.size();
                 Collections.shuffle(questionList);
                 correcttext.setText("Question:"+totalquestion);

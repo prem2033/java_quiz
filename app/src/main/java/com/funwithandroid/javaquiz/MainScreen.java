@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelper;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperSynonyms;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperThird;
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelpersecond;
 
 public class MainScreen extends AppCompatActivity {
@@ -33,7 +36,8 @@ public class MainScreen extends AppCompatActivity {
         quizutton=findViewById(R.id.quizpage);
         highscoretext=findViewById(R.id.highscoretext);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("QuizHat");
+        //actionBar.setTitle("QuizHat");
+        actionBar.setTitle(Html.fromHtml("<font color='#03DAC5'>"+getString(R.string.app_name)+"</font>"));
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         getIntentValue();
@@ -48,12 +52,21 @@ public class MainScreen extends AppCompatActivity {
                        case 1:
                            QuizDbHelper quizDbHelper = new QuizDbHelper(getApplicationContext());
                            quizDbHelper.fillQuestionsToDb();
-                            checkForDatabase();
+                            //checkForDatabase();
                             break;
                        case 2:
                            QuizDbHelpersecond quizDbHelpersecond=new QuizDbHelpersecond(getApplicationContext());
                            quizDbHelpersecond.fillQuestionsToDb();
-                           checkForDatabase();
+                           //checkForDatabase();
+                           break;
+                       case 3:
+                           QuizDbHelperThird quizDbHelperThird=new QuizDbHelperThird(getApplicationContext());
+                           quizDbHelperThird.fillQuestionsToDb();
+                           //checkForDatabase();
+                           break;
+                       case 4:
+                           QuizDbHelperSynonyms quizDbHelperSynonyms=new QuizDbHelperSynonyms(getApplicationContext());
+                           quizDbHelperSynonyms.fillQuestionsToDb();
                            break;
                        default:
                            Toast.makeText(MainScreen.this, "Contact to developer", Toast.LENGTH_SHORT).show();
@@ -96,6 +109,10 @@ public class MainScreen extends AppCompatActivity {
             editor.putInt("highscore", score).apply();break;
             case 2:
                 editor.putInt("highscore2",score).apply();break;
+            case 3:
+                editor.putInt("highscore3",score).apply();break;
+            case 4:
+                editor.putInt("highscore4",score).apply();break;
         }
     }
     private void checkForDatabase(){
@@ -109,13 +126,20 @@ public class MainScreen extends AppCompatActivity {
         switch (quiz_position) {
             case 1:
                 highscore = getShared.getInt("highscore", 0);
-                 highscoretext.setText("Highscore:" + highscore);
                  break;
             case 2:
                 highscore=getShared.getInt("highscore2",0);
-                highscoretext.setText("Highscore:"+highscore);
+               // highscoretext.setText("Highscore:"+highscore);
+                break;
+            case 3:
+                highscore=getShared.getInt("highscore3",0);
+               // highscoretext.setText("Highscore:"+highscore);
+                break;
+            case 4:
+                highscore=getShared.getInt("highscore4",0);
                 break;
         }
+        highscoretext.setText("Highscore:" + highscore);
     }
 
     @Override
@@ -149,6 +173,10 @@ public class MainScreen extends AppCompatActivity {
             editor.putInt("highscore", 0).apply();break;
             case 2:
                 editor.putInt("highscore2",0).apply();break;
+            case 3:
+                editor.putInt("highscore3",0).apply();break;
+            case 4:
+                editor.putInt("highscore4",0).apply();break;
         }
         Toast.makeText(this, "Highescore refreshed", Toast.LENGTH_SHORT).show();
         highscoretext.setText("Highscore:0");

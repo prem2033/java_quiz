@@ -10,6 +10,7 @@ import  com.funwithandroid.javaquiz.contactdeveloper.Contact;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -29,11 +30,12 @@ public class recyler_view_quiz_main_page extends AppCompatActivity {
         setContentView(R.layout.activity_recyler_view_quiz_main_page);
         recylerView=findViewById(R.id.recylerview);
         quizquestionlist=new ArrayList<>();
-        //ActionBar actionBar=getSupportActionBar();
-        //assert actionBar != null;
+        ActionBar actionBar=getSupportActionBar();
+        assert actionBar != null;
        // actionBar.setTitle("QuizHat");
-        //actionBar.setDisplayUseLogoEnabled(true);
-        //actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle(Html.fromHtml("<font color='#03DAC5'>"+getString(R.string.app_name)+"</font>"));
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
         AddCardView();
         getRecylerView();
         recylerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
@@ -47,10 +49,10 @@ public class recyler_view_quiz_main_page extends AppCompatActivity {
         });
     }
     private void AddCardView(){
-        quizquestionlist.add("Quiz 1");
-        quizquestionlist.add("Quiz 2");
-        quizquestionlist.add("Quiz 3");
-        quizquestionlist.add("Quiz 4");
+        quizquestionlist.add("Calander Quiz");
+        quizquestionlist.add("Find the odd man out");
+        quizquestionlist.add("Verbal Ability::Antonyms");
+        quizquestionlist.add("Verbal Ability::Synonyms");
         quizquestionlist.add("Quiz 5");
         quizquestionlist.add("Quiz 6");
         quizquestionlist.add("Quiz 7");
