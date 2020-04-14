@@ -1,7 +1,11 @@
 package com.funwithandroid.javaquiz;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -12,27 +16,28 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.funwithandroid.javaquiz.dbhandler.QuizDbHelper;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperAnonyms;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperFill;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperError;
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperSynonyms;
-import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperThird;
-import com.funwithandroid.javaquiz.dbhandler.QuizDbHelpersecond;
 import com.funwithandroid.javaquiz.dialog.ViewDialog;
 
 import java.util.Collections;
 import java.util.List;
 
-public class QuestionScreen extends AppCompatActivity {
-    public static String EXTRA_SCORE,EXTRA_QUIZ_POSITION;
+public class QuestionScreenFinal extends AppCompatActivity {
+    private Button quizutton;
+    private  String VERSION="VERSION 1.0.0";
+    private TextView highscoretext;
+    private  int highscore,quiz_position;
+    public static String EXTRA_SCORE;
     private List<Question> questionList;
-    private QuizDbHelper quizDbHelper;
-    private QuizDbHelpersecond quizDbHelpersecond;
-    private QuizDbHelperThird quizDbHelperThird;
+    private QuizDbHelperAnonyms quizDbHelperAnonyms;
     private QuizDbHelperSynonyms quizDbHelperSynonyms;
+    private QuizDbHelperError quizDbHelperError;
+    private QuizDbHelperFill quizDbHelperFill;
     private RadioGroup optiongroup;
-    private RadioButton option1,option2,option3;
+    private RadioButton option1,option2,option3,option4;
     private TextView scoretext,correcttext,questiontext,timetext;
     private Button nextbutton;
     private  int totalquestion,currentquestion=0;
@@ -41,64 +46,83 @@ public class QuestionScreen extends AppCompatActivity {
     private int score=0;
     private ColorStateList radiontextcolor;
     private  long backPressedTime;
-    private int quiz_position;
+    SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_screen);
+        setContentView(R.layout.activity_question_screen_final);
+        quizutton=findViewById(R.id.quizpage);
+        highscoretext=findViewById(R.id.highscoretext);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Question");
-        actionBar.setTitle(Html.fromHtml("<font color='#03DAC5'>"+"Question"+"</font>"));
+        actionBar.setTitle(Html.fromHtml("<font color='#000000'>"+getString(R.string.app_name)+"</font>"));
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         initilization();
-        getIntentData();
-        switch (quiz_position){
-            case 1:
-                quizDbHelper=new QuizDbHelper(this);
-                questionList=quizDbHelper.getAllQuestions();
-                totalquestion=questionList.size();
-                Collections.shuffle(questionList);
-                correcttext.setText("Question:"+totalquestion);
-                break;
-            case 2:
-                quizDbHelpersecond=new QuizDbHelpersecond(this);
-                questionList=quizDbHelpersecond.getAllQuestions();
-                totalquestion=questionList.size();
-                Collections.shuffle(questionList);
-                correcttext.setText("Question:"+totalquestion);
-                break;
-            case 3:
-                quizDbHelperThird=new QuizDbHelperThird(this);
-                questionList=quizDbHelperThird.getAllQuestions();
-                totalquestion=questionList.size();
-                Collections.shuffle(questionList);
-                correcttext.setText("Question:"+totalquestion);
-                break;
-            case 4:
-                quizDbHelperSynonyms=new QuizDbHelperSynonyms(this);
-                questionList=quizDbHelperSynonyms.getAllQuestions();
-                totalquestion=questionList.size();
-                Collections.shuffle(questionList);
-                correcttext.setText("Question:"+totalquestion);
-                break;
-        }
+        getIntentValue();
+        chooseDataBase(quiz_position);
         setNextQuestionOnScreen();
         nextbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!answred){
-                    if (option1.isChecked() || option2.isChecked() || option3.isChecked()) {
+                    if (option1.isChecked() || option2.isChecked() || option3.isChecked() ||option4.isChecked() ) {
                         checkAnswer();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                          setNextQuestionOnScreen();
-                  }
+                    setNextQuestionOnScreen();
+                }
             }
         });
+
+    }
+    private  void getIntentValue(){
+        Intent intent=getIntent();
+        quiz_position=intent.getIntExtra("DATABASE_POSITION",0);
+    }
+    public  void finishTheQuiz(){
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(EXTRA_SCORE, score);
+        setResult(RESULT_OK, resultIntent);
+        finish();
+    }
+    public  void chooseDataBase(int position){
+        switch (position){
+            case 1:
+                quizDbHelperAnonyms =new QuizDbHelperAnonyms(this);
+                quizDbHelperAnonyms.fillQuestionsToDb();
+                questionList= quizDbHelperAnonyms.getAllQuestions();
+                totalquestion=questionList.size();
+                Collections.shuffle(questionList);
+                correcttext.setText("Question:"+totalquestion);
+                break;
+            case 2:
+                quizDbHelperSynonyms =new QuizDbHelperSynonyms(this);
+                quizDbHelperSynonyms.fillQuestionsToDb();
+                questionList= quizDbHelperSynonyms.getAllQuestions();
+                totalquestion=questionList.size();
+                Collections.shuffle(questionList);
+                correcttext.setText("Question:"+totalquestion);
+                break;
+            case 3:
+                quizDbHelperError =new QuizDbHelperError(this);
+                quizDbHelperError.fillQuestionsToDb();
+                questionList= quizDbHelperError.getAllQuestions();
+                totalquestion=questionList.size();
+                Collections.shuffle(questionList);
+                correcttext.setText("Question:"+totalquestion);
+                break;
+            case 4:
+                quizDbHelperFill =new QuizDbHelperFill(this);
+                quizDbHelperFill.fillQuestionsToDb();
+                questionList= quizDbHelperFill.getAllQuestions();
+                totalquestion=questionList.size();
+                Collections.shuffle(questionList);
+                correcttext.setText("Question:"+totalquestion);
+                break;
+        }
     }
     private  void initilization(){
         scoretext=findViewById(R.id.scoretext);
@@ -109,6 +133,7 @@ public class QuestionScreen extends AppCompatActivity {
         option1=findViewById(R.id.option1);
         option2=findViewById(R.id.option2);
         option3=findViewById(R.id.option3);
+        option4=findViewById(R.id.option4);
         nextbutton=findViewById(R.id.nextbutton);
         radiontextcolor=option1.getTextColors();
     }
@@ -116,6 +141,7 @@ public class QuestionScreen extends AppCompatActivity {
         option1.setTextColor(radiontextcolor);
         option2.setTextColor(radiontextcolor);
         option3.setTextColor(radiontextcolor);
+        option4.setTextColor(radiontextcolor);
         optiongroup.clearCheck();
         if(currentquestion<totalquestion) {
             question = questionList.get(currentquestion);
@@ -123,6 +149,7 @@ public class QuestionScreen extends AppCompatActivity {
             option1.setText(question.getOption1());
             option2.setText(question.getOption2());
             option3.setText(question.getOption3());
+            option4.setText(question.getOption4());
             currentquestion++;
             answred=false;
             correcttext.setText("Questions:"+currentquestion+"/"+totalquestion);
@@ -147,24 +174,26 @@ public class QuestionScreen extends AppCompatActivity {
         option1.setTextColor(Color.RED);
         option2.setTextColor(Color.RED);
         option3.setTextColor(Color.RED);
+        option4.setTextColor(Color.RED);
         answred=true;
         RadioButton rbSelected = findViewById(optiongroup.getCheckedRadioButtonId());
         if(question.getAnswer()==optiongroup.indexOfChild(rbSelected)+1) {
             switch (question.getAnswer()) {
                 case 1:
                     option1.setTextColor(Color.BLUE);
-                    //questiontext.setText("correct");
                     correctDialogOnCorreect();
                     break;
                 case 2:
                     option2.setTextColor(Color.BLUE);
                     correctDialogOnCorreect();
-                    //questiontext.setText("correct");
                     break;
                 case 3:
                     option3.setTextColor(Color.BLUE);
                     correctDialogOnCorreect();
-                   // questiontext.setText("correct");
+                    break;
+                case 4:
+                    option4.setTextColor(Color.BLUE);
+                    correctDialogOnCorreect();
                     break;
             }
         }else{
@@ -172,17 +201,18 @@ public class QuestionScreen extends AppCompatActivity {
                 case 1:
                     option1.setTextColor(Color.BLUE);
                     correctDialogOnWrong();
-                    //questiontext.setText("Wrong");
                     break;
                 case 2:
                     option2.setTextColor(Color.BLUE);
                     correctDialogOnWrong();
-                    //questiontext.setText("Wrong");
                     break;
                 case 3:
                     option3.setTextColor(Color.BLUE);
                     correctDialogOnWrong();
-                   // questiontext.setText("Wrong");
+                    break;
+                case 4:
+                    option4.setTextColor(Color.BLUE);
+                    correctDialogOnWrong();
                     break;
             }
         }
@@ -192,14 +222,14 @@ public class QuestionScreen extends AppCompatActivity {
             nextbutton.setText("Finish");
         }
     }
-    public  void finishTheQuiz(){
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_SCORE, score);
-        //resultIntent.putExtra(EXTRA_QUIZ_POSITION,quiz_position);
-        setResult(RESULT_OK, resultIntent);
-        finish();
+    public  void correctDialogOnCorreect(){
+        ViewDialog alert = new ViewDialog();
+        alert.showDialogcorrect(this);
     }
-
+    public  void correctDialogOnWrong(){
+        ViewDialog alert = new ViewDialog();
+        alert.showDialogwrong(this);
+    }
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
@@ -210,43 +240,5 @@ public class QuestionScreen extends AppCompatActivity {
 
         backPressedTime = System.currentTimeMillis();
     }
-    public  void correctDialogOnCorreect(){
-//         final AlertDialog.Builder dialog=new AlertDialog.Builder(this);
-//        dialog.setMessage("Correct");
-//        final AlertDialog alert = dialog.create();
-//        alert.show();
-//        new CountDownTimer(1000, 500) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {         }
-//            @Override
-//            public void onFinish() {
-//                alert.dismiss();
-//            }
-//        }.start();
-        ViewDialog alert = new ViewDialog();
-        alert.showDialogcorrect(this);
-    }
-    public  void correctDialogOnWrong(){
-//        final AlertDialog.Builder dialog=new AlertDialog.Builder(this);
-//        dialog.setMessage("Wrong");
-//        final AlertDialog alert = dialog.create();
-//        alert.show();
-//        new CountDownTimer(1000, 500) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {         }
-//            @Override
-//            public void onFinish() {
-//                alert.dismiss();
-//            }
-//        }.start();
-        ViewDialog alert = new ViewDialog();
-        alert.showDialogwrong(this);
-    }
-    private void getIntentData(){
-        Intent intent=getIntent();
-        quiz_position=intent.getIntExtra("DATA_BASE_POSITION",0);
-
-    }
-
 
 }

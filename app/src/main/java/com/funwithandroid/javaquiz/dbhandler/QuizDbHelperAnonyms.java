@@ -8,16 +8,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.funwithandroid.javaquiz.Question;
 import com.funwithandroid.javaquiz.dbParams.DbVariables.QuestionTable;
+import com.funwithandroid.javaquiz.Question;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuizDbHelperThird extends SQLiteOpenHelper {
+public class QuizDbHelperAnonyms extends SQLiteOpenHelper {
     private SQLiteDatabase db;
-    public QuizDbHelperThird(Context context) {
-        super(context, QuestionTable.DATABASE_NAME_THIRD, null, QuestionTable.VERSION);
+    public QuizDbHelperAnonyms(Context context) {
+        super(context, QuestionTable.DATABASE_NAME, null, QuestionTable.VERSION);
 
     }
     @Override
@@ -31,6 +31,7 @@ public class QuizDbHelperThird extends SQLiteOpenHelper {
                 QuestionTable.COLUMN_OPTION1+" TEXT,"+
                 QuestionTable.COLUMN_OPTION2+" TEXT,"+
                 QuestionTable.COLUMN_OPTION3+" TEXT,"+
+                QuestionTable.COLUMN_OPTION4+" TEXT,"+
                 QuestionTable.COLUMN_ANSWER+" INTEGER"+
                 ")";
         db.execSQL(CREATE_DATA_BASE);
@@ -56,22 +57,17 @@ public class QuizDbHelperThird extends SQLiteOpenHelper {
         db=this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
         onCreate(db);
-        question=new Question("ENORMOUS","Soft","Average","Tiny",3);
+        question=new Question("INDUSTRIOUS","Indifferent","Indolent","Casual","Passive",2);
         addToDataBase(question);
-        question=new Question("COMMISSIONED","Terminated","Started","Closed",1);
+        question=new Question("ALIEN","Native","Domiciled","Natural","Resident",1);
         addToDataBase(question);
-        question=new Question("SHRINK","Contract","Spoil","Expand",3);
+        question=new Question("SYNTHETIC","Affable","Natural","Plastic","Cosmetic",2);
         addToDataBase(question);
-        question=new Question("ARTIFICIAL","Red","Natural","Solid",2);
+        question=new Question("BALANCE","Disbalance","Misbalance","Debalance","Imbalance",4);
         addToDataBase(question);
-        question=new Question("EXPAND","Congest","Condense","Convert",2);
+        question=new Question("STRINGENT","General","Vehement","Lenient","Magnanimous",3);
         addToDataBase(question);
-        question=new Question("MORTAL","Immortal","Spiritual","Divine",1);
-        addToDataBase(question);
-        question=new Question("OBEYING","Following","Ordering","Contradicting",2);
-        addToDataBase(question);
-        question=new Question("FRESH","Sluggish","Stale","Faulty",2);
-        addToDataBase(question);
+
 
     }
    private void addToDataBase(Question question){
@@ -81,6 +77,7 @@ public class QuizDbHelperThird extends SQLiteOpenHelper {
         contentValues.put(QuestionTable.COLUMN_OPTION1,question.getOption1());
         contentValues.put(QuestionTable.COLUMN_OPTION2,question.getOption2());
         contentValues.put(QuestionTable.COLUMN_OPTION3,question.getOption3());
+       contentValues.put(QuestionTable.COLUMN_OPTION4,question.getOption4());
         contentValues.put(QuestionTable.COLUMN_ANSWER,question.getAnswer());
         db.insert(QuestionTable.TABLE_NAME,null,contentValues);
         db.close();
@@ -96,6 +93,7 @@ public class QuizDbHelperThird extends SQLiteOpenHelper {
                 question.setOption1(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION1)));
                 question.setOption2(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION2)));
                 question.setOption3(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION3)));
+                question.setOption4(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION4)));
                 question.setAnswer(cursor.getInt(cursor.getColumnIndex(QuestionTable.COLUMN_ANSWER)));
                 questionslist.add(question);
             }while (cursor.moveToNext());

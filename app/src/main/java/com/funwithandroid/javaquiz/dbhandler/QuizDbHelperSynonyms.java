@@ -17,13 +17,12 @@ import java.util.List;
 public class QuizDbHelperSynonyms extends SQLiteOpenHelper {
     private SQLiteDatabase db;
     public QuizDbHelperSynonyms(Context context) {
-        super(context, QuestionTable.DATABASE_NAME_SYNONYMS, null, QuestionTable.VERSION);
+        super(context, QuestionTable.DATABASE_NAME_SECOND, null, QuestionTable.VERSION);
 
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
             this.db=db;
-        Log.d("ccccc","start");
         final  String CREATE_DATA_BASE="CREATE TABLE "+
                 QuestionTable.TABLE_NAME+"("+
                 QuestionTable._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
@@ -31,16 +30,17 @@ public class QuizDbHelperSynonyms extends SQLiteOpenHelper {
                 QuestionTable.COLUMN_OPTION1+" TEXT,"+
                 QuestionTable.COLUMN_OPTION2+" TEXT,"+
                 QuestionTable.COLUMN_OPTION3+" TEXT,"+
+                QuestionTable.COLUMN_OPTION4+" TEXT,"+
                 QuestionTable.COLUMN_ANSWER+" INTEGER"+
                 ")";
         db.execSQL(CREATE_DATA_BASE);
-        Log.d("ccccc","end");
+       // Log.d("ccccc","end");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d("ccccc","upgradestatrt");
+       // Log.d("ccccc","upgradestatrt");
 
         try {
             db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
@@ -56,23 +56,16 @@ public class QuizDbHelperSynonyms extends SQLiteOpenHelper {
         db=this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
         onCreate(db);
-        question=new Question("BRIEF","Small","Limited","Short",3);
+        question=new Question("CORPULENT","Lean","Gaunt","Emaciated","Obese",4);
         addToDataBase(question);
-        question=new Question("VENT","Opening","Stodge","End",1);
+        question=new Question("BARE","Uncovered","Tolerate","Clear","Neat",1);
         addToDataBase(question);
-        question=new Question("ALERT","Energetic","Intelligent","Watchful",3);
+        question=new Question("SALACITY","Bliss","Depression","Indecency","Recession",3);
         addToDataBase(question);
-        question=new Question("HESITATED","Slowed","Paused","Postponed",2);
+        question=new Question("ECSTATIC","Animated","Bewildered","Enraptured","Illful",3);
         addToDataBase(question);
-        question=new Question("RESCUE","Defence","Help","Command",2);
+        question=new Question("DILIGENT","Progressive","Brilliant","Inventive","Hard-working",4);
         addToDataBase(question);
-        question=new Question("ATTEMPT","Try","Explain","Explore",1);
-        addToDataBase(question);
-        question=new Question("RECKLESS","Courageous","Rash","Bold",2);
-        addToDataBase(question);
-        question=new Question("CONSEQUENCES","Difficulties","Results","Applications",2);
-        addToDataBase(question);
-
     }
    private void addToDataBase(Question question){
        db=getWritableDatabase();
@@ -81,6 +74,7 @@ public class QuizDbHelperSynonyms extends SQLiteOpenHelper {
         contentValues.put(QuestionTable.COLUMN_OPTION1,question.getOption1());
         contentValues.put(QuestionTable.COLUMN_OPTION2,question.getOption2());
         contentValues.put(QuestionTable.COLUMN_OPTION3,question.getOption3());
+       contentValues.put(QuestionTable.COLUMN_OPTION4,question.getOption4());
         contentValues.put(QuestionTable.COLUMN_ANSWER,question.getAnswer());
         db.insert(QuestionTable.TABLE_NAME,null,contentValues);
         db.close();
@@ -96,6 +90,7 @@ public class QuizDbHelperSynonyms extends SQLiteOpenHelper {
                 question.setOption1(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION1)));
                 question.setOption2(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION2)));
                 question.setOption3(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION3)));
+                question.setOption4(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION4)));
                 question.setAnswer(cursor.getInt(cursor.getColumnIndex(QuestionTable.COLUMN_ANSWER)));
                 questionslist.add(question);
             }while (cursor.moveToNext());

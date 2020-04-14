@@ -14,15 +14,16 @@ import com.funwithandroid.javaquiz.dbParams.DbVariables.QuestionTable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuizDbHelpersecond extends SQLiteOpenHelper {
+public class QuizDbHelperFill extends SQLiteOpenHelper {
     private SQLiteDatabase db;
-    public QuizDbHelpersecond(Context context) {
-        super(context, QuestionTable.DATABASE_NAME_SECOND, null, QuestionTable.VERSION);
+    public QuizDbHelperFill(Context context) {
+        super(context, QuestionTable.DATABASE_NAME_SYNONYMS, null, QuestionTable.VERSION);
 
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
             this.db=db;
+        Log.d("ccccc","start");
         final  String CREATE_DATA_BASE="CREATE TABLE "+
                 QuestionTable.TABLE_NAME+"("+
                 QuestionTable._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
@@ -30,16 +31,17 @@ public class QuizDbHelpersecond extends SQLiteOpenHelper {
                 QuestionTable.COLUMN_OPTION1+" TEXT,"+
                 QuestionTable.COLUMN_OPTION2+" TEXT,"+
                 QuestionTable.COLUMN_OPTION3+" TEXT,"+
+                QuestionTable.COLUMN_OPTION4+" TEXT,"+
                 QuestionTable.COLUMN_ANSWER+" INTEGER"+
                 ")";
         db.execSQL(CREATE_DATA_BASE);
-       // Log.d("ccccc","end");
+        Log.d("ccccc","end");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       // Log.d("ccccc","upgradestatrt");
+        Log.d("ccccc","upgradestatrt");
 
         try {
             db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
@@ -55,23 +57,17 @@ public class QuizDbHelpersecond extends SQLiteOpenHelper {
         db=this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
         onCreate(db);
-        question=new Question(
-                "3, 5, 11, 14, 17, 21","3","14","21",2);
+        question=new Question("Fate smiles ______those who untiringly grapple with stark realities of life.","with","over","on","round",3);
         addToDataBase(question);
-        question=new Question("8, 27, 64, 100, 125, 216, 343","100","125","8",1);
+        question=new Question("Catching the earlier train will give us the _____ to do some shopping","chance","luck","possibility","occasion",1);
         addToDataBase(question);
-        question=new Question("10, 25, 45, 54, 60, 75, 80","10","75","54",3);
+        question=new Question("I saw a ______ of cows in the field.","group","herd","swarm","flock",2);
         addToDataBase(question);
-        question=new Question("6, 9, 15, 21, 24, 28, 30","21","28","none of these",2);
+        question=new Question("The grapes are now _____ enough to be picked.","ready","mature","ripe","flock",3);
         addToDataBase(question);
-        question=new Question("3,5,7,41,17,21","21","5","17",1);
+        question=new Question("A sanguine outlook is associated with the _____.","rationalist","socialist","philanthropist","optimist",4);
         addToDataBase(question);
-        question=new Question("2,80,46,54,67","80","54","67",3);
-        addToDataBase(question);
-        question=new Question("1.2,5.9,6.9,2,7.9","2","1.2","None",1);
-        addToDataBase(question);
-        question=new Question("16, 25, 36, 72, 144, 196, 225","72","16","36",1);
-        addToDataBase(question);
+
 
     }
    private void addToDataBase(Question question){
@@ -81,6 +77,7 @@ public class QuizDbHelpersecond extends SQLiteOpenHelper {
         contentValues.put(QuestionTable.COLUMN_OPTION1,question.getOption1());
         contentValues.put(QuestionTable.COLUMN_OPTION2,question.getOption2());
         contentValues.put(QuestionTable.COLUMN_OPTION3,question.getOption3());
+       contentValues.put(QuestionTable.COLUMN_OPTION4,question.getOption4());
         contentValues.put(QuestionTable.COLUMN_ANSWER,question.getAnswer());
         db.insert(QuestionTable.TABLE_NAME,null,contentValues);
         db.close();
@@ -96,6 +93,7 @@ public class QuizDbHelpersecond extends SQLiteOpenHelper {
                 question.setOption1(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION1)));
                 question.setOption2(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION2)));
                 question.setOption3(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION3)));
+                question.setOption4(cursor.getString(cursor.getColumnIndex(QuestionTable.COLUMN_OPTION4)));
                 question.setAnswer(cursor.getInt(cursor.getColumnIndex(QuestionTable.COLUMN_ANSWER)));
                 questionslist.add(question);
             }while (cursor.moveToNext());

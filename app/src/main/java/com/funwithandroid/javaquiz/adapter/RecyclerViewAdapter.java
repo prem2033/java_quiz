@@ -8,13 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.funwithandroid.javaquiz.R;
+import com.funwithandroid.javaquiz.recylerData.RecylerData;
+
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     private OnItemClickListener mListener;
-    private ArrayList<String > quetionlist;
+    private ArrayList<RecylerData> quetionlist;
     private Context context;
-    public RecyclerViewAdapter(Context context, ArrayList<String> arrayList) {
+    public RecyclerViewAdapter(Context context, ArrayList<RecylerData> arrayList) {
         this.context = context;
         this.quetionlist=arrayList;
     }
@@ -26,7 +28,9 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
     }
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.quiznumber.setText(quetionlist.get(position));
+        RecylerData recylerData=quetionlist.get(position);
+        holder.quiznumber.setText(recylerData.getType());
+        holder.recylescore.setText(recylerData.getHighscore());
     }
     @Override
     public int getItemCount() {
@@ -35,9 +39,11 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView quiznumber;
+        private TextView recylescore;
         private  ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             quiznumber = itemView.findViewById(R.id.quiznumber);
+            recylescore=itemView.findViewById(R.id.recylescore);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
