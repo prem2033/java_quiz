@@ -8,4 +8,5 @@
     <color name="redcolor">#FB0303</color>
     <color name="splash">#7c8500</color>
     <color name="bordercolor">#bc5100</color>
+    <color name="radiobackground">#fff59d</color>
 </resources>

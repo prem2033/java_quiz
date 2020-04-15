@@ -8,6 +8,7 @@
     android:layout_marginRight="8dp"
     android:layout_marginBottom="8dp"
     app:cardBackgroundColor="@color/mainbackground"
+    app:cardCornerRadius="20dp"
     app:cardElevation="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,12 +42,25 @@
             <TextView
                 android:id="@+id/recylescore"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:gravity="center_horizontal|center_vertical"
                 android:paddingBottom="4dp"
-                android:text="Highscore"
+                android:text="@string/highscore"
                 android:textSize="24sp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:max="5"
+                android:min="0"
+                android:progress="5"
+                android:progressTint="@color/bordercolor"/>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

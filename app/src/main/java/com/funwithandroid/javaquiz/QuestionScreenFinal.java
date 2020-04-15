@@ -2,6 +2,8 @@ package com.funwithandroid.javaquiz;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -21,15 +23,14 @@ import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperFill;
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperError;
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperSynonyms;
 import com.funwithandroid.javaquiz.dialog.ViewDialog;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Collections;
 import java.util.List;
 
 public class QuestionScreenFinal extends AppCompatActivity {
-    private Button quizutton;
-    private  String VERSION="VERSION 1.0.0";
-    private TextView highscoretext;
-    private  int highscore,quiz_position;
+    private ConstraintLayout coordinatorLayout;
+    private  int quiz_position;
     public static String EXTRA_SCORE;
     private List<Question> questionList;
     private QuizDbHelperAnonyms quizDbHelperAnonyms;
@@ -46,13 +47,10 @@ public class QuestionScreenFinal extends AppCompatActivity {
     private int score=0;
     private ColorStateList radiontextcolor;
     private  long backPressedTime;
-    SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_screen_final);
-        quizutton=findViewById(R.id.quizpage);
-        highscoretext=findViewById(R.id.highscoretext);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle(Html.fromHtml("<font color='#000000'>"+getString(R.string.app_name)+"</font>"));
         actionBar.setDisplayUseLogoEnabled(true);
@@ -72,6 +70,7 @@ public class QuestionScreenFinal extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
                     }
                 }else {
+                    resetToOriginlRadionBackground();
                     setNextQuestionOnScreen();
                 }
             }
@@ -136,6 +135,7 @@ public class QuestionScreenFinal extends AppCompatActivity {
         option4=findViewById(R.id.option4);
         nextbutton=findViewById(R.id.nextbutton);
         radiontextcolor=option1.getTextColors();
+        coordinatorLayout=findViewById(R.id.coordinatelayout);
     }
     public void setNextQuestionOnScreen(){
         option1.setTextColor(radiontextcolor);
@@ -235,10 +235,39 @@ public class QuestionScreenFinal extends AppCompatActivity {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             finishTheQuiz();
         } else {
-            Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar=Snackbar.make(coordinatorLayout,"Press back again to finish",Snackbar.LENGTH_LONG);
+            snackbar.setTextColor(Color.WHITE);
+            snackbar.setBackgroundTint(Color.GRAY);
+            snackbar.show();
         }
-
         backPressedTime = System.currentTimeMillis();
     }
-
+    public void colorradioView(View view){
+        colorRadioButtomOnTouch();
+    }
+    public void colorRadioButtomOnTouch(){
+        resetToOriginlRadionBackground();
+        if(option1.isChecked()){
+            option1.setBackgroundResource(R.drawable.backround_radio_button);
+        }else if(option2.isChecked()){
+            option2.setBackgroundResource(R.drawable.backround_radio_button);
+        }else if(option3.isChecked()){
+            option3.setBackgroundResource(R.drawable.backround_radio_button);
+        }else{
+            option4.setBackgroundResource(R.drawable.backround_radio_button);
+        }
+    }
+    public  void resetToOriginlRadionBackground(){
+        option1.setBackgroundResource(R.drawable.square);
+        option2.setBackgroundResource(R.drawable.square);
+        option3.setBackgroundResource(R.drawable.square);
+        option4.setBackgroundResource(R.drawable.square);
+    }
+    public void optionGrpEnableDisable(){
+        option1.setEnabled(false);
+        option2.setEnabled(false);
+        option3.setEnabled(false);
+        option4.setEnabled(false);
+    }
 }

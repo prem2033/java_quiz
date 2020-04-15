@@ -28,4 +28,6 @@
     <string name="calldeveloper">Call to Developer</string>
     <string name="message_developer">Message to Developer</string>
     <string name="maildeveloper">Mail to developer</string>
+    <string name="highscore">Highscore</string>
+
 </resources>
