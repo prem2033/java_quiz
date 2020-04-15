@@ -181,40 +181,34 @@ public class QuestionScreenFinal extends AppCompatActivity {
             switch (question.getAnswer()) {
                 case 1:
                     option1.setTextColor(Color.BLUE);
-                    correctDialogOnCorreect();
                     break;
                 case 2:
                     option2.setTextColor(Color.BLUE);
-                    correctDialogOnCorreect();
                     break;
                 case 3:
                     option3.setTextColor(Color.BLUE);
-                    correctDialogOnCorreect();
                     break;
                 case 4:
                     option4.setTextColor(Color.BLUE);
-                    correctDialogOnCorreect();
                     break;
             }
+            correctDialogOnCorreect();
         }else{
             switch (question.getAnswer()) {
                 case 1:
                     option1.setTextColor(Color.BLUE);
-                    correctDialogOnWrong();
                     break;
                 case 2:
                     option2.setTextColor(Color.BLUE);
-                    correctDialogOnWrong();
                     break;
                 case 3:
                     option3.setTextColor(Color.BLUE);
-                    correctDialogOnWrong();
                     break;
                 case 4:
                     option4.setTextColor(Color.BLUE);
-                    correctDialogOnWrong();
                     break;
             }
+            correctDialogOnWrong();
         }
         if (currentquestion < totalquestion) {
             nextbutton.setText("Next");
