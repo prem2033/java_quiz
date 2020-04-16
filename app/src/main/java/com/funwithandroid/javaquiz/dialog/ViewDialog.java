@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.CountDownTimer;
 import android.view.Window;
-import android.widget.TextView;
-
 import com.funwithandroid.javaquiz.R;
 
 public class ViewDialog {

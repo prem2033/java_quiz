@@ -1,5 +1,4 @@
 package com.funwithandroid.javaquiz.adapter;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.funwithandroid.javaquiz.R;
 import com.funwithandroid.javaquiz.recylerData.RecylerData;
-
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
@@ -59,9 +57,7 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
     }
     public interface OnItemClickListener {
         void onItemClick(int position);
-       // void onDeleteBtnClick(int position);
     }
-
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }

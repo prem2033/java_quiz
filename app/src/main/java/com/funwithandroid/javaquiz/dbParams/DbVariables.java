@@ -1,6 +1,4 @@
 package com.funwithandroid.javaquiz.dbParams;
-
-import android.content.SharedPreferences;
 import android.provider.BaseColumns;
 
 public final class DbVariables{

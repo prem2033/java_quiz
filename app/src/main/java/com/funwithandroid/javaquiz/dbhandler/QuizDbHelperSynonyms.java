@@ -7,10 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import com.funwithandroid.javaquiz.Question;
 import com.funwithandroid.javaquiz.dbParams.DbVariables.QuestionTable;
-
 import java.util.ArrayList;
 import java.util.List;
 

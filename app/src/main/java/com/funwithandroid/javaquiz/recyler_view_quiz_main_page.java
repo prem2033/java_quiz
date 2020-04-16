@@ -1,14 +1,5 @@
 package com.funwithandroid.javaquiz;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import  com.funwithandroid.javaquiz.permission.GetPermission;
-import  com.funwithandroid.javaquiz.contactdeveloper.Contact;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,10 +7,15 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.funwithandroid.javaquiz.adapter.RecyclerViewAdapter;
+import com.funwithandroid.javaquiz.contactdeveloper.Contact;
+import com.funwithandroid.javaquiz.permission.GetPermission;
 import com.funwithandroid.javaquiz.recylerData.RecylerData;
-
 import java.util.ArrayList;
 
 public class recyler_view_quiz_main_page extends AppCompatActivity {

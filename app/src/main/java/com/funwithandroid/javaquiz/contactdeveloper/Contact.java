@@ -1,5 +1,4 @@
 package com.funwithandroid.javaquiz.contactdeveloper;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -41,7 +40,6 @@ public class Contact {
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(context, "No email clients found.",Toast.LENGTH_SHORT).show();
         }
-
     }
 
 }

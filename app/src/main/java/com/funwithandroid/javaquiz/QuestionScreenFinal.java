@@ -1,15 +1,10 @@
 package com.funwithandroid.javaquiz;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
@@ -17,16 +12,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperAnonyms;
-import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperFill;
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperError;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperFill;
 import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperSynonyms;
 import com.funwithandroid.javaquiz.dialog.ViewDialog;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class QuestionScreenFinal extends AppCompatActivity {
     private ConstraintLayout coordinatorLayout;
@@ -47,6 +44,8 @@ public class QuestionScreenFinal extends AppCompatActivity {
     private int score=0;
     private ColorStateList radiontextcolor;
     private  long backPressedTime;
+    private CountDownTimer countDownTimer;
+    private  long milisecondleft=31000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +56,17 @@ public class QuestionScreenFinal extends AppCompatActivity {
         actionBar.setDisplayShowHomeEnabled(true);
         initilization();
         getIntentValue();
+       // countTimer();
         chooseDataBase(quiz_position);
         setNextQuestionOnScreen();
+        countTimer();
         nextbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!answred){
                     if (option1.isChecked() || option2.isChecked() || option3.isChecked() ||option4.isChecked() ) {
                         checkAnswer();
+                       countDownTimer.cancel();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), "Please select an answer", Toast.LENGTH_SHORT).show();
@@ -72,10 +74,10 @@ public class QuestionScreenFinal extends AppCompatActivity {
                 }else {
                     resetToOriginlRadionBackground();
                     setNextQuestionOnScreen();
+                    countTimer();
                 }
             }
         });
-
     }
     private  void getIntentValue(){
         Intent intent=getIntent();
@@ -136,6 +138,7 @@ public class QuestionScreenFinal extends AppCompatActivity {
         nextbutton=findViewById(R.id.nextbutton);
         radiontextcolor=option1.getTextColors();
         coordinatorLayout=findViewById(R.id.coordinatelayout);
+       // timetext.setVisibility(View.INVISIBLE);
     }
     public void setNextQuestionOnScreen(){
         option1.setTextColor(radiontextcolor);
@@ -161,12 +164,10 @@ public class QuestionScreenFinal extends AppCompatActivity {
     private void checkAnswer() {
         RadioButton rbSelected = findViewById(optiongroup.getCheckedRadioButtonId());
         int answerNr = optiongroup.indexOfChild(rbSelected) + 1;
-
         if (answerNr == question.getAnswer()) {
             score++;
             scoretext.setText("Score: " + score);
         }
-
         showSolution();
     }
     private void showSolution() {
@@ -177,6 +178,7 @@ public class QuestionScreenFinal extends AppCompatActivity {
         option4.setTextColor(Color.RED);
         answred=true;
         RadioButton rbSelected = findViewById(optiongroup.getCheckedRadioButtonId());
+        //if answer is correct
         if(question.getAnswer()==optiongroup.indexOfChild(rbSelected)+1) {
             switch (question.getAnswer()) {
                 case 1:
@@ -192,23 +194,30 @@ public class QuestionScreenFinal extends AppCompatActivity {
                     option4.setTextColor(Color.BLUE);
                     break;
             }
-            correctDialogOnCorreect();
-        }else{
+            if(option1.isChecked() || option2.isChecked() || option3.isChecked() || option4.isChecked())
+                 correctDialogOnCorreect();
+        }else{ //if selected answer is incorrect
+            if(option1.isChecked() || option2.isChecked() || option3.isChecked() || option4.isChecked())
+                      correctDialogOnWrong();
             switch (question.getAnswer()) {
                 case 1:
                     option1.setTextColor(Color.BLUE);
+                    option1.setChecked(true);
                     break;
                 case 2:
                     option2.setTextColor(Color.BLUE);
+                    option2.setChecked(true);
                     break;
                 case 3:
                     option3.setTextColor(Color.BLUE);
+                    option3.setChecked(true);
                     break;
                 case 4:
                     option4.setTextColor(Color.BLUE);
+                    option4.setChecked(true);
                     break;
             }
-            correctDialogOnWrong();
+
         }
         if (currentquestion < totalquestion) {
             nextbutton.setText("Next");
@@ -229,7 +238,6 @@ public class QuestionScreenFinal extends AppCompatActivity {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             finishTheQuiz();
         } else {
-           // Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
             Snackbar snackbar=Snackbar.make(coordinatorLayout,"Press back again to finish",Snackbar.LENGTH_LONG);
             snackbar.setTextColor(Color.WHITE);
             snackbar.setBackgroundTint(Color.GRAY);
@@ -264,4 +272,23 @@ public class QuestionScreenFinal extends AppCompatActivity {
         option3.setEnabled(false);
         option4.setEnabled(false);
     }
+    public  void countTimer(){
+        milisecondleft=31000;
+       countDownTimer= new CountDownTimer(milisecondleft,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                milisecondleft = millisUntilFinished;
+                int minutes = (int) (milisecondleft / 1000) / 60;
+                int seconds = (int) (milisecondleft / 1000) % 60;
+                String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+                timetext.setText(timeLeftFormatted);
+            }
+            @Override
+            public void onFinish() {
+                checkAnswer();
+            }
+        }.start();
+
+    }
+
 }

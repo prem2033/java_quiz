@@ -7,10 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import com.funwithandroid.javaquiz.Question;
 import com.funwithandroid.javaquiz.dbParams.DbVariables.QuestionTable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +16,9 @@ public class QuizDbHelperError extends SQLiteOpenHelper {
     private SQLiteDatabase db;
     public QuizDbHelperError(Context context) {
         super(context, QuestionTable.DATABASE_NAME_THIRD, null, QuestionTable.VERSION);
-
     }
     @Override
-    public void onCreate(SQLiteDatabase db) {
+public void onCreate(SQLiteDatabase db) {
             this.db=db;
         Log.d("ccccc","start");
         final  String CREATE_DATA_BASE="CREATE TABLE "+
@@ -36,13 +33,10 @@ public class QuizDbHelperError extends SQLiteOpenHelper {
                 ")";
         db.execSQL(CREATE_DATA_BASE);
         Log.d("ccccc","end");
-
     }
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d("ccccc","upgradestatrt");
-
         try {
             db.execSQL("DROP TABLE IF EXISTS '"+QuestionTable.TABLE_NAME+"'");
             db.delete(QuestionTable.TABLE_NAME, null, null);
@@ -61,7 +55,6 @@ public class QuizDbHelperError extends SQLiteOpenHelper {
         addToDataBase(question);
        question=new Question("Spot Error in Sentence","According to the Bible","it is meek and humble","who shall inherit the earth","No error",2);
        addToDataBase(question);
-
     }
    private void addToDataBase(Question question){
        db=getWritableDatabase();
