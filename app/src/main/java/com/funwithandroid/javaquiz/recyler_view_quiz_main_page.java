@@ -3,10 +3,14 @@ package com.funwithandroid.javaquiz;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,22 +18,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.funwithandroid.javaquiz.adapter.RecyclerViewAdapter;
 import com.funwithandroid.javaquiz.contactdeveloper.Contact;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperAnonyms;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperError;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperFill;
+import com.funwithandroid.javaquiz.dbhandler.QuizDbHelperSynonyms;
 import com.funwithandroid.javaquiz.permission.GetPermission;
 import com.funwithandroid.javaquiz.recylerData.RecylerData;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class recyler_view_quiz_main_page extends AppCompatActivity {
    private RecyclerView recylerView;
     private RecyclerViewAdapter recylerViewAdapter;
     private ArrayList<RecylerData>  quizquestionlist;
-    public String DATA_BASE_NAME=null;
     private  int highscore,quiz_position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyler_view_quiz_main_page);
         recylerView=findViewById(R.id.recylerview);
-        quizquestionlist=new ArrayList<RecylerData>();
+        quizquestionlist=new ArrayList<>();
         ActionBar actionBar=getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle(Html.fromHtml("<font color='#000000'>"+getString(R.string.app_name)+"</font>"));
@@ -38,6 +47,9 @@ public class recyler_view_quiz_main_page extends AppCompatActivity {
         AddCardView();
         getRecylerView();
         LoadHighScoreAtBeginning();
+        if(savedInstanceState!=null){
+            quiz_position=savedInstanceState.getInt("QUIZ_POSITION");
+        }
         recylerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -46,6 +58,7 @@ public class recyler_view_quiz_main_page extends AppCompatActivity {
                 if(quiz_position==5)
                     Toast.makeText(recyler_view_quiz_main_page.this, "Not yet developed", Toast.LENGTH_SHORT).show();
                 else {
+                   // chooseDataBase(quiz_position);
                     callIntent(position);
                 }
             }
@@ -55,6 +68,7 @@ public class recyler_view_quiz_main_page extends AppCompatActivity {
     private  void callIntent(int position){
         Intent intent=new Intent(getApplicationContext(),QuestionScreenFinal.class);
         intent.putExtra("DATABASE_POSITION",position);
+        //intent.putParcelableArrayListExtra("ARRAY_LIST_QUESTION", (ArrayList<Question>) questionList);
         startActivityForResult(intent,1);
     }
     //setting recylerView
@@ -142,6 +156,7 @@ public class recyler_view_quiz_main_page extends AppCompatActivity {
             case 5:
                 editor.putInt("highscore5",score).apply();break;
         }
+        Log.d("XXXX","position"+quiz_position);
         quizquestionlist.get(quiz_position-1).setHighscore("Highscore:"+score);
         recylerViewAdapter.notifyItemChanged(quiz_position-1);
     }
@@ -185,4 +200,10 @@ private int getHighScoreOfCard(){
         }
         return highscore;
 }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("QUIZ_POSITION",quiz_position);
+    }
 }
