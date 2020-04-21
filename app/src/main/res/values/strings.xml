@@ -29,4 +29,6 @@
     <string name="message_developer">Message to Developer</string>
     <string name="maildeveloper">Mail to developer</string>
     <string name="highscore">Highscore</string>
+    <string name="scoretext">Score:</string>
+    <string name="questionsmsg">Question:</string>
 </resources>

@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.CountDownTimer;
 import android.view.Window;
+
 import com.funwithandroid.javaquiz.R;
 
 public class ViewDialog {
-
     public void showDialogcorrect(Activity activity){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -40,4 +40,6 @@ public class ViewDialog {
         dialog.show();
 
     }
+
+
 }
