@@ -408,7 +408,6 @@ public class QuestionScreenFinal extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        // Log.d("XXXX","saveinstances run");
         super.onSaveInstanceState(outState);
         outState.putLong("TIME_LEFT", milisecondleft);
         outState.putInt("SCORE", score);
@@ -428,11 +427,6 @@ public class QuestionScreenFinal extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.congarts_dialog);
         TextView textView = dialog.findViewById(R.id.scoretextdialog);
-        int percentage = (score / totalquestion) * 100;
-        //Log.d("xxxxx",""+score);
-        //Log.d("xxxxx",""+totalquestion);
-        //double per=score/totalquestion;
-        //Log.d("xxxxx",""+3/5);
         textView.setText("Correct=" + score);
         Button dialogButton = dialog.findViewById(R.id.buttonok);
         dialogButton.setOnClickListener(new View.OnClickListener() {
