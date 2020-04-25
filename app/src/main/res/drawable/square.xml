@@ -10,7 +10,7 @@
     <!--        android:centerColor="@color/colorPrimary"-->
     <!--        android:endColor="@android:color/background_light"/>-->
     <stroke
-        android:color="@color/bordercolor"
+        android:color="@color/colorAccent"
         android:width="3dp"/>
 
 </shape>

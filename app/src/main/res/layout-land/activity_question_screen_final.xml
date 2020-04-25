@@ -4,168 +4,169 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/mainbackground"
-    tools:context=".QuestionScreenFinal"
-    android:id="@+id/coordinatelayout">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/coordinatelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background2"
+        tools:context=".QuestionScreenFinal">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/scoretext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/scoremsg"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/correcttext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/correct"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/scoretext"
-            android:layout_width="match_parent"
+            android:id="@+id/timetext"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/scoremsg"
+            android:layout_marginTop="8dp"
+            android:text="@string/time"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.934"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
-            android:id="@+id/correcttext"
-            android:layout_width="match_parent"
+            android:id="@+id/questiontext"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/correct"
-            android:textColor="@color/colorAccent"
-            android:textSize="24sp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/timetext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/time"
-        android:textColor="@color/colorAccent"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.934"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/questiontext"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/square"
-        android:gravity="center_horizontal|center_vertical"
-        android:includeFontPadding="true"
-        android:paddingLeft="8dp"
-        android:paddingTop="4dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="4dp"
-        android:text="@string/question"
-        android:textColor="@color/colorAccent"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <RadioGroup
-        android:id="@+id/optiongroup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/square"
-        android:onClick="colorradioView"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/questiontext"
-        app:layout_constraintHorizontal_bias="0.44"
-        app:layout_constraintStart_toStartOf="@+id/questiontext"
-        app:layout_constraintTop_toBottomOf="@+id/questiontext">
-
-        <RadioButton
-            android:id="@+id/option1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="8dp"
             android:background="@drawable/square"
-            android:buttonTint="@color/colorAccent"
-            android:onClick="colorradioView"
-            android:padding="8dp"
-            android:text="@string/option"
+            android:gravity="center_horizontal|center_vertical"
+            android:includeFontPadding="true"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp"
+            android:text="@string/question"
             android:textColor="@color/colorAccent"
             android:textSize="24sp"
-            tools:targetApi="lollipop" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <RadioButton
-            android:id="@+id/option2"
-            android:layout_width="match_parent"
+        <RadioGroup
+            android:id="@+id/optiongroup"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/square"
-            android:buttonTint="@color/colorAccent"
             android:onClick="colorradioView"
             android:padding="8dp"
-            android:text="@string/option"
-            android:textColor="@color/colorAccent"
-            android:textSize="24sp"
-            tools:targetApi="lollipop" />
+            app:layout_constraintEnd_toEndOf="@+id/questiontext"
+            app:layout_constraintHorizontal_bias="0.44"
+            app:layout_constraintStart_toStartOf="@+id/questiontext"
+            app:layout_constraintTop_toBottomOf="@+id/questiontext">
 
-        <RadioButton
-            android:id="@+id/option3"
-            android:layout_width="match_parent"
+            <RadioButton
+                android:id="@+id/option1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/square"
+                android:buttonTint="@color/colorAccent"
+                android:onClick="colorradioView"
+                android:padding="8dp"
+                android:text="@string/option"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                tools:targetApi="lollipop" />
+
+            <RadioButton
+                android:id="@+id/option2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/square"
+                android:buttonTint="@color/colorAccent"
+                android:onClick="colorradioView"
+                android:padding="8dp"
+                android:text="@string/option"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                tools:targetApi="lollipop" />
+
+            <RadioButton
+                android:id="@+id/option3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/square"
+                android:buttonTint="@color/colorAccent"
+                android:onClick="colorradioView"
+                android:padding="8dp"
+                android:text="@string/option"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                tools:targetApi="lollipop" />
+
+            <RadioButton
+                android:id="@+id/option4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/square"
+                android:buttonTint="@color/colorAccent"
+                android:onClick="colorradioView"
+                android:padding="8dp"
+                android:text="@string/option"
+                android:textColor="@color/colorAccent"
+                android:textSize="24sp"
+                tools:targetApi="lollipop" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/nextbutton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/square"
-            android:buttonTint="@color/colorAccent"
-            android:onClick="colorradioView"
-            android:padding="8dp"
-            android:text="@string/option"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_shape"
+            android:text="@string/submit"
             android:textColor="@color/colorAccent"
             android:textSize="24sp"
-            tools:targetApi="lollipop" />
-
-        <RadioButton
-            android:id="@+id/option4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/square"
-            android:buttonTint="@color/colorAccent"
-            android:onClick="colorradioView"
-            android:padding="8dp"
-            android:text="@string/option"
-            android:textColor="@color/colorAccent"
-            android:textSize="24sp"
-            tools:targetApi="lollipop" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/nextbutton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/button_shape"
-        android:text="@string/submit"
-        android:textColor="@color/colorAccent"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/optiongroup"
-        app:layout_constraintVertical_bias="0.181" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/optiongroup"
+            app:layout_constraintVertical_bias="0.181" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

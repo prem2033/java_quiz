@@ -10,9 +10,7 @@
     <!--        android:centerColor="@color/colorPrimary"-->
     <!--        android:endColor="@android:color/background_light"/>-->
     <stroke
-        android:color="@color/bordercolor"
+        android:color="@color/redcolor"
         android:width="3dp"/>
-    <solid
-        android:color="@color/radiobackground"/>
 
 </shape>

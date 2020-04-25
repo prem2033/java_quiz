@@ -47,18 +47,18 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
 //            case 4:
 //                holder.cardView.setCardBackgroundColor(Color.GREEN);break;
 //        }
-        switch (position){
-            case 0:
-                holder.constraintLayout.setBackgroundResource(R.drawable.card_background1);break;
-            case 1:
-                holder.constraintLayout.setBackgroundResource(R.drawable.card_background2);break;
-            case 2:
-                holder.constraintLayout.setBackgroundResource(R.drawable.card_background1);break;
-            case 3:
-                holder.constraintLayout.setBackgroundResource(R.drawable.card_background2);break;
-            case 4:
-                holder.constraintLayout.setBackgroundResource(R.drawable.card_background1);break;
-        }
+//        switch (position){
+//            case 0:
+//                holder.constraintLayout.setBackgroundResource(R.drawable.card_background1);break;
+//            case 1:
+//                holder.constraintLayout.setBackgroundResource(R.drawable.card_background2);break;
+//            case 2:
+//                holder.constraintLayout.setBackgroundResource(R.drawable.card_background1);break;
+//            case 3:
+//                holder.constraintLayout.setBackgroundResource(R.drawable.card_background2);break;
+//            case 4:
+//                holder.constraintLayout.setBackgroundResource(R.drawable.card_background1);break;
+//        }
     }
     @Override
     public int getItemCount() {

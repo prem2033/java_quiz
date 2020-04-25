@@ -13,6 +13,6 @@
         android:color="@color/colorAccent"
         android:width="3dp"/>
     <solid
-        android:color="@color/redcolor"/>
+        android:color="@color/fadered"/>
 
 </shape>
